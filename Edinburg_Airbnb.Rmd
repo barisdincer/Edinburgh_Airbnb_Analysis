@@ -1,0 +1,88 @@
+---
+title: "Edinburgh Airbnb Anaysis"
+subtitle: "Due: 11 February, 17:48 TR time"
+output: 
+  tufte::tufte_html:
+    css: ../hw.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+    
+knitr::opts_chunk$set(out.width = "100%")
+```
+
+**Note: Since I do not have the photo, it gives an error while knit. That's why I removed the photo.**
+
+
+
+## Some Information About Packages
+
+This assignment will use the following packages:
+
+-   `tidyverse`: a collection of packages for doing data analysis in a "tidy" way
+-   `ggplot2`: a package that contains the function for the grammer of graphics
+-   `lubridate`: a package for formatting dates in R (in case if you need)
+
+We use the `library()` function to load packages.
+In your R Markdown document you should see an R chunk labelled `load-packages` which has the necessary code for loading both packages.
+
+```{r load-packages}
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+```
+
+
+# Airbnb Listings in Edinburgh
+
+Airbnb is an online marketplace where people can book short-term stays in hotels or in other people's houses.
+Recent developments in Edinburgh regarding the growth of Airbnb and its impact on the housing market means a better understanding of the Airbnb listings is needed.
+Using data provided by Airbnb, we can explore how Airbnb availability and prices vary by neighbourhood.
+
+## Column Descriptors
+
+The `edibnb` data set contain `r nrow(edibnb)` listings in Edinburgh, with values about `r ncol(edibnb)` different variables that includes the property neighborhood location, number of rooms and review ratings.
+
+Edinburgh council collects the second data set from their assessments of a randomly selected sample of listings.
+
+The variables in this data set are: 
+- `id`, the ID number of the listing (according to `edibnb`) 
+- `price`, the daily rate of the accommodation unit
+- `neighborhood`, indicates in which neighbourhood the accommodation is located
+- `accommodates`, indicates how many people the accommodation can accommodate
+- `bathrooms`, indicates how many bathrooms the accommodation unit
+- `bedrooms`, indicates how many bedrooms are in the accommodation unit
+- `beds`, indicates how many beds are in the accommodation unit
+- `review_scores_rating`, the council's rating of the listing of the property either being good, adequate or poor.
+- `number of reviews`, indicates how many of the people who have stayed here before have made a review
+- `listing url`, the url of the accommodation
+
+------------------------------------------------------------------------
+
+```{r load-edibnb-data, message = FALSE}
+edibnb <- read_csv("C:/Projects/0_Github/Edinburgh_Airbnb_Analysis/edibnb.csv")
+```
+
+------------------------------------------------------------------------
+
+We can view the dataset as a spreadsheet using the `View()` function.
+
+```{r view-data, eval = FALSE}
+View(edibnb)
+```
+
+The data is contained in the file `council_assessments.csv`
+
+```{r message = FALSE}
+council <- read_csv("C:/Projects/0_Github/Edinburgh_Airbnb_Analysis/council_assessments.csv")
+```
+
