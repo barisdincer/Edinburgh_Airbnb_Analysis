@@ -102,10 +102,14 @@ max_reviews <- max(rev_scores$number_of_reviews)
 id_max_reviews <- rev_scores$id[rev_scores$number_of_reviews == max_reviews]
 
 #Task 2
+
+na_count <- colSums(is.na(edibnb))
+
+#Task 3
+
 library(visdat)
 vis_miss(edibnb)
 
-#Task 3
 library(naniar)
 gg_miss_var(edibnb)
 ```
@@ -115,8 +119,46 @@ gg_miss_var(edibnb)
 Firstly, I created the cells equal to 100 in the review_scores_rating column in the dataset as a subset to rev_scores. Then I used the max function to find the one with the most reviews among them and threw it into max_reviews. Here I found the value 612. 612 indicated the review value and I needed the id of this value. For this reason, I found the id by querying the max_reviews(612) value that matches the number_of_reviews value in rev_scores. ID 860170 came out. In other words, I found that the id with 860170 has the most reviews among the accommodation with the most ratings. 
 
 *Task2*
-I want to know how much NA is in the values in the dataset. The vis_miss function in the visdat library is used to visualise the NA values. 
+I want to know how much NA is in the values in the dataset. I used the colsums is.na function to determine how many na in the columns. The following variables have missing observations, price, neighbourhood, bathrooms, bedrooms, beds, review_scores_rating, number_of_reviews, linsting_url
 
 *Task3*
+The vis_miss function in the visdat library is used to visualise the NA values. 
 I visualised missing variables with the gg_miss_var function in the naniar library
+
+## Exercise 2 (25 pts)
+
+Calculate the minimum, maximum and average price from the Airbnb properties in Southside for a single night stay for four people (Try to use the `summarise` function).
+
+```{r, Question2}
+filter(edibnb, neighbourhood=="Southside" & accommodates == 4) %>% 
+  summarise(min_price=min(price),
+          max_price=max(price),
+          avg_price=mean(price))
+```
+
+I filtered the desired properties using the filter function. Then I found the desired average price, minimum price and maximum price with the %>% (pipe) operator. I got min_price 39, max_price 450 and avg_price 120.
+
+## Exercise 3 (30 pts)
+
+When looking at the data you will notice that some of the listings have a value for the number of bathrooms that is not a whole number, e.g. 1.5 or 2.5.
+
+-   Mutate the `bathrooms` variable to round the number of bathrooms *up* to the nearest whole number
+
+-   Using this mutated variable, how many listings have more bathrooms than bedrooms?
+
+```{r, Question3}
+
+#Task 1
+edibnb <- edibnb%>% mutate(bathrooms_round = ceiling(bathrooms))
+
+#Task 2
+nrow(filter(edibnb,bathrooms_round > bedrooms))
+
+```
+
+*Task 1*
+I created a column called bathrooms_round using the mutate function and combined it with the ceiling command to round the numbers
+
+*Task2*
+I filtered the bathrooms_round variable using the > operator and used nrow to find out how many this value should be. 963 accomodates are more than bathroom bedroom
 
