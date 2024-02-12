@@ -86,3 +86,37 @@ The data is contained in the file `council_assessments.csv`
 council <- read_csv("C:/Projects/0_Github/Edinburgh_Airbnb_Analysis/council_assessments.csv")
 ```
 
+## Exercise 1 (15 pts)
+
+-   In the `edibnb` data set, what is the ID of the listing that has the highest number of reviews with a perfect review score of 100%?
+
+-   Which variables have the missing observations in the `edibnb` data set.
+
+-   Visualize the missing observations using some functions from visdat or naniar packages
+
+```{r, Question1}
+
+#Task 1
+rev_scores <- subset(edibnb, review_scores_rating == 100)
+max_reviews <- max(rev_scores$number_of_reviews)
+id_max_reviews <- rev_scores$id[rev_scores$number_of_reviews == max_reviews]
+
+#Task 2
+library(visdat)
+vis_miss(edibnb)
+
+#Task 3
+library(naniar)
+gg_miss_var(edibnb)
+```
+
+
+*Task1*
+Firstly, I created the cells equal to 100 in the review_scores_rating column in the dataset as a subset to rev_scores. Then I used the max function to find the one with the most reviews among them and threw it into max_reviews. Here I found the value 612. 612 indicated the review value and I needed the id of this value. For this reason, I found the id by querying the max_reviews(612) value that matches the number_of_reviews value in rev_scores. ID 860170 came out. In other words, I found that the id with 860170 has the most reviews among the accommodation with the most ratings. 
+
+*Task2*
+I want to know how much NA is in the values in the dataset. The vis_miss function in the visdat library is used to visualise the NA values. 
+
+*Task3*
+I visualised missing variables with the gg_miss_var function in the naniar library
+
